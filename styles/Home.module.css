@@ -114,9 +114,62 @@
   height: 1em;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+.picAndTextWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
+
+.halfScreen {
+  display: flex;
+  flex: 1;
+  height: 70vh;
+  margin: 1rem;
+}
+
+.textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.dropTarget {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.onHover {
+  background: #0090ff90;
+}
+
+.hide {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.button {
+  color: #FFF;
+  background: linear-gradient(-90deg, #0090FF, #00cae4);
+  padding: 1em;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: none;
+  font-size: 15px;
+}
+
+.previewImage {
+  max-height: 100%;
+  max-width: 100%;
+}
+
