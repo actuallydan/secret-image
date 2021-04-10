@@ -9,13 +9,6 @@ export default function Home() {
   const [isHovering, setIsHovering] = useState(false);
   const [bufferImage, setBufferImage] = useState(null);
 
-
-  useEffect(() => {
-    if (bufferImage) {
-      decode();
-    }
-  }, [bufferImage]);
-
   function handleImageChange(e) {
     const file = e.target.files[0];
     updateImage(file)
@@ -85,21 +78,18 @@ export default function Home() {
           secret.push(255 - this.bitmap.data[idx + 3]);
 
         });
-        console.log(secret);
+
         // convert string of numbers to characters
         let triples = []
-        let latestSplice = "999"
+        let latestSplice = [9, 9, 9]
 
-        while (latestSplice[0] === 0 && latestSplice[1] === 0 && latestSplice[2] === 0) {
+        while (latestSplice[0] !== 0 || latestSplice[1] !== 0 || latestSplice[2] !== 0) {
           latestSplice = secret.splice(0, 3);
-          if (latestSplice[0] === 0 && latestSplice[1] === 0 && latestSplice[2] === 0) {
+          if (latestSplice[0] !== 0 || latestSplice[1] !== 0 || latestSplice[2] !== 0) {
             triples.push(latestSplice)
           }
         }
-        console.log(triples)
-        secret = triples.map(t => String.fromCharCode(parseInt(t.join(""), 10)))
-
-        console.log(secret);
+        secret = triples.map(t => String.fromCharCode(parseInt(t.join(""), 10))).join("")
 
         setText(secret)
       })
@@ -126,7 +116,7 @@ export default function Home() {
         // console.log(image.bitmap)
         // convert text => char[] => int[] => char[] (number strings) => string[] (001, 032, 123) => char[][] => char[] (3x length of original arr)
         let charArr = [...text].map(c => c.charCodeAt().toString().padStart(3, "0").split("")).flat();
-
+        console.log(charArr)
         const { nextChar } = stringArrterator(charArr);
 
         for (let y = 0; y < image.bitmap.height; y++) {
@@ -187,7 +177,9 @@ export default function Home() {
       <div className={styles.picAndTextWrapper}>
         <fieldset className={styles.halfScreen}>
           <legend>Text</legend>
-          <textarea value={text} className={styles.textarea} onChange={updateText} placeholder="Enter secret text to encode here!"></textarea>
+          <textarea value={text} className={styles.textarea} onChange={updateText} placeholder="Enter secret text to encode here!" ></textarea>
+          {bufferImage && text && <button onClick={encode}>Encode Text In Image</button>}
+
         </fieldset>
         <fieldset className={styles.halfScreen}>
           <legend>Image</legend>
@@ -210,10 +202,11 @@ export default function Home() {
               </div>
             }
           </div>
+          {image && imageUrl && bufferImage && <button onClick={decode}>Decode Text From Image</button>}
+
         </fieldset>
       </div>
 
-      {bufferImage && text && <button onClick={encode}>Encode Text In Image</button>}
     </div>
   )
 }

@@ -173,3 +173,12 @@
   max-width: 100%;
 }
 
+@media (max-width: 600px){
+  .picAndTextWrapper{
+    flex-direction: column;
+  }
+  .halfScreen {
+    height: 45vh;
+    width: 100%;
+  }
+}
